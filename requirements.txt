@@ -11,6 +11,6 @@ jupyter-dash
 tensorflow-gpu
 keras
 tflite
-google_images_download
+simple_image_download
 opencv-python
 pytesseract
