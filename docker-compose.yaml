@@ -1,0 +1,12 @@
+services:
+  jupyter:
+    build: .
+    volumes:
+      - type: bind
+        source: ./code
+        target: /home/code
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]

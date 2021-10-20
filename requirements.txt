@@ -1,0 +1,16 @@
+ipykernel
+numpy
+pandas
+scikit-learn
+matplotlib
+seaborn
+xgboost
+plotly
+dash
+jupyter-dash
+tensorflow-gpu
+keras
+tflite
+google_images_download
+opencv-python
+pytesseract
