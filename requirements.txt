@@ -12,5 +12,6 @@ tensorflow-gpu
 keras
 tflite
 simple_image_download
-opencv-python
+opencv-python-headless
 pytesseract
+# pytesseract-ocr
