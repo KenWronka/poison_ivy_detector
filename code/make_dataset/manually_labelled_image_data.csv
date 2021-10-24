@@ -1,4 +1,4 @@
-file_name,label,keep,did_not_load,text,human,colors
+file_name,label,keep,did_not_load,has_text,has_human,wrong_colors
 poison_ivy_plant_1.jpg,1,1,0,0,0,0
 poison_ivy_plant_10.jpg,1,1,0,0,0,0
 poison_ivy_plant_11.jpg,1,0,0,0,1,0
