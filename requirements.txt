@@ -4,11 +4,12 @@ pandas
 scikit-learn
 matplotlib
 seaborn
+tqdm
 xgboost
 plotly
 dash
 jupyter-dash
-tensorflow-gpu
+tensorflow-gpu==2.6
 keras
 tflite
 simple_image_download

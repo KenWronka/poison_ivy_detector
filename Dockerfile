@@ -1,4 +1,4 @@
-FROM tensorflow/tensorflow:latest-gpu-py3
+FROM tensorflow/tensorflow:2.6.0-gpu
 
 # Intended for attaching VS code container and executing a Python environment
 
@@ -13,5 +13,4 @@ RUN pip install --upgrade pip
 RUN pip install Pillow
 COPY ./requirements.txt .
 RUN pip install -r requirements.txt
-
 CMD tail -f /dev/null
