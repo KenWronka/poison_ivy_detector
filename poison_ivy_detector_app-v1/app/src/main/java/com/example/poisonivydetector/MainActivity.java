@@ -1,5 +1,7 @@
 package com.example.poisonivydetector;
 
+//Initial app based off: https://github.com/BCJuan/SimpleClassificationApp
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.camera.core.Camera;

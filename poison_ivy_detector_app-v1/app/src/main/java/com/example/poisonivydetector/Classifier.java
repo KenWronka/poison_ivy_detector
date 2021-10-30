@@ -46,14 +46,14 @@ public class Classifier {
         try{
             MappedByteBuffer tfliteModel
                     = FileUtil.loadMappedFile(context,
-                    "mobilenet_v1_0.25_128_quantized_1_metadata_1.tflite");
+                    "v1_poison_ivy_mobilenet-v3.tflite");
             tflite = new Interpreter(tfliteModel);
         } catch (IOException e){
             Log.e("tfliteSupport", "Error reading model", e);
         }
     }
 
-    public String classify(ImageProxy image){
+    public float[] classify(ImageProxy image){
         @SuppressLint("UnsafeExperimentalUsageError")
         Image img = image.getImage();
         Bitmap bitmap = Utils.toBitmap(img);
@@ -64,30 +64,21 @@ public class Classifier {
         int size = height > width ? width : height;
         ImageProcessor imageProcessor = new ImageProcessor.Builder()
                 .add(new ResizeWithCropOrPadOp(size, size))
-                .add(new ResizeOp(128, 128, ResizeOp.ResizeMethod.BILINEAR))
+                .add(new ResizeOp(224, 224, ResizeOp.ResizeMethod.BILINEAR))
                 .add(new Rot90Op(rotation))
                 .build();
-        TensorImage tensorImage = new TensorImage(DataType.UINT8);
+        TensorImage tensorImage = new TensorImage(DataType.FLOAT32);
         tensorImage.load(bitmap);
         tensorImage = imageProcessor.process(tensorImage);
         TensorBuffer probabilityBuffer =
-                TensorBuffer.createFixedSize(new int[]{1, 1001}, DataType.UINT8);
+                TensorBuffer.createFixedSize(new int[]{1, 1}, DataType.FLOAT32);
         if(null != tflite) {
             tflite.run(tensorImage.getBuffer(), probabilityBuffer.getBuffer());
         }
         TensorProcessor probabilityProcessor =
-                new TensorProcessor.Builder().add(new NormalizeOp(0, 255)).build();
+                new TensorProcessor.Builder().build();
 
-        String result = " ";
-        if (null != associatedAxisLabels) {
-            // Map of labels and their corresponding probability
-            TensorLabel labels = new TensorLabel(associatedAxisLabels,
-                    probabilityProcessor.process(probabilityBuffer));
-
-            // Create a map to access the result based on label
-            Map<String, Float> floatMap = labels.getMapWithFloatValue();
-            result = Utils.writeResults(floatMap);
-        }
+        float[] result = probabilityProcessor.process(probabilityBuffer).getFloatArray();
         return result;
     }
 
