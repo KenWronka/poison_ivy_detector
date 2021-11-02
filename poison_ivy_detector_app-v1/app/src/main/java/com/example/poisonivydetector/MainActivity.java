@@ -20,6 +20,7 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     PreviewView mPreviewView;
     TextView tvResults;
     Classifier classifier;
+    ProgressBar detectionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         mPreviewView = findViewById(R.id.viewFinder);
         tvResults = findViewById(R.id.tvResults);
+        detectionBar = findViewById(R.id.detectionBar);
 
         classifier = new Classifier(this);
 
@@ -94,9 +97,12 @@ public class MainActivity extends AppCompatActivity {
                 new ImageAnalysis.Analyzer() {
                     @Override
                     public void analyze(@NonNull ImageProxy image) {
-                        String result;
-                        result = classifier.classify(image);
+                        float[] result_array = classifier.classify(image);
+                        float result_logit = result_array[0];
+                        double result_num = (1 / (1 + Math.exp(-result_logit)));
+                        String result = String.format("Poison ivy likelihood: %.2f%s", result_num*100, "%");
                         tvResults.setText(result);
+                        detectionBar.setProgress((int) Math.round(result_num * 100));
                         image.close();
                     }
                 });
