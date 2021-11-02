@@ -15,4 +15,6 @@ tflite
 simple_image_download
 opencv-python-headless
 pytesseract
+dask
+tqdm
 # pytesseract-ocr
