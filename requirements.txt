@@ -18,3 +18,5 @@ pytesseract
 dask
 tqdm
 # pytesseract-ocr
+mypy
+gbif-dl
