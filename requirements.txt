@@ -3,6 +3,7 @@ numpy
 pandas
 scikit-learn
 matplotlib
+sqlalchemy
 seaborn
 tqdm
 xgboost
@@ -20,3 +21,4 @@ tqdm
 # pytesseract-ocr
 mypy
 gbif-dl
+psycopg2-binary
