@@ -17,6 +17,7 @@ simple_image_download
 opencv-python-headless
 pytesseract
 dask
+ipywidgets
 tqdm
 # pytesseract-ocr
 mypy
