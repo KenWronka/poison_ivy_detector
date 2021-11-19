@@ -23,3 +23,4 @@ tqdm
 mypy
 gbif-dl
 psycopg2-binary
+jupyterlab

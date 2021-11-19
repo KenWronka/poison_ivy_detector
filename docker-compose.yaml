@@ -4,6 +4,7 @@ services:
     volumes:
       - type: bind
         source: ./code
+        # target: /tf/notebooks
         target: /home/code
     deploy:
       resources:
@@ -12,6 +13,8 @@ services:
             - capabilities: [gpu]
     networks:
      - metadb_network
+    ports:
+     - "8888:8888"
   metadata_db:
     image: postgres
     environment:
