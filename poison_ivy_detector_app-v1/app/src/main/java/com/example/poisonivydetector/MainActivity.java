@@ -98,8 +98,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void analyze(@NonNull ImageProxy image) {
                         float[] result_array = classifier.classify(image);
-                        float result_logit = result_array[0];
-                        double result_num = (1 / (1 + Math.exp(-result_logit)));
+                        float result_num = result_array[classifier.POSITIVE_INDEX];
+//                        double result_num = (1 / (1 + Math.exp(-result_logit)));
                         String result = String.format("Poison ivy likelihood: %.2f%s", result_num*100, "%");
                         tvResults.setText(result);
                         detectionBar.setProgress((int) Math.round(result_num * 100));

@@ -8,6 +8,7 @@ import android.util.Log;
 
 import androidx.camera.core.ImageProxy;
 
+import org.json.JSONObject;
 import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.Interpreter;
 import org.tensorflow.lite.support.common.FileUtil;
@@ -22,6 +23,7 @@ import org.tensorflow.lite.support.label.TensorLabel;
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.MappedByteBuffer;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +34,8 @@ public class Classifier {
     Interpreter tflite;
     final String ASSOCIATED_AXIS_LABELS = "labels.txt";
     List<String> associatedAxisLabels = null;
+    int POSITIVE_INDEX = 3;
+    int LABEL_LENGTH = 4;
 
     public Classifier(Context context)
     {
@@ -46,12 +50,13 @@ public class Classifier {
         try{
             MappedByteBuffer tfliteModel
                     = FileUtil.loadMappedFile(context,
-                    "v1_poison_ivy_mobilenet-v3.tflite");
+                    "MNv3-xfer_multiclass.tflite");
             tflite = new Interpreter(tfliteModel);
         } catch (IOException e){
             Log.e("tfliteSupport", "Error reading model", e);
         }
     }
+
 
     public float[] classify(ImageProxy image){
         @SuppressLint("UnsafeExperimentalUsageError")
@@ -71,7 +76,9 @@ public class Classifier {
         tensorImage.load(bitmap);
         tensorImage = imageProcessor.process(tensorImage);
         TensorBuffer probabilityBuffer =
-                TensorBuffer.createFixedSize(new int[]{1, 1}, DataType.FLOAT32);
+                TensorBuffer.createFixedSize(new int[]{LABEL_LENGTH, 1}, DataType.FLOAT32);
+
+
         if(null != tflite) {
             tflite.run(tensorImage.getBuffer(), probabilityBuffer.getBuffer());
         }
