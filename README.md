@@ -25,10 +25,13 @@ As this is for educational purposes, I am keeping old and "pilot" versions of th
 ## Assembling the dataset
 
 (#TODO)
+![picture examples](./GH_images/pic_examples.png)
 
 ## Filtering the images
 
 (#TODO)
+![filter examples](./GH_images/filter_examples.png)
+![filter counts](./GH_images/filter_chart.png)
 
 ## Splitting the dataset
 
@@ -37,13 +40,15 @@ As this is for educational purposes, I am keeping old and "pilot" versions of th
 ## Fitting the model
 
 (#TODO)
+![model training](./GH_images/training_progress.png)
+![confusion matrix multiclass](./GH_images/cm_multi_multi.png)
+![confusion matrix binary](./GH_images/cm_multi_binary.png)
 
 ## Implementing as an app
 
 (#TODO)
+![app image](./GH_images/app_screenshot.png)
 
+## Limitations & Future Possibilities
 
-
-## Other links
-
-View 
+(#TODO)
