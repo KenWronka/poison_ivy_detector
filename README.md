@@ -18,6 +18,7 @@ To view similar projects, check out my Data Science portfolio page (#TODO).
 
 As this is for educational purposes, I am keeping old and "pilot" versions of the code; [the most recent version of the model steps code can be found here](./code/model_pipeline_v1).
 
+
 ## Creating the development environment
 
 For reproducability, a Docker-Compose development environment is used containing two images:
@@ -25,6 +26,7 @@ For reproducability, a Docker-Compose development environment is used containing
  - A standard Postgres image
 
 The development environment uses the Postgres container for dataset-metadata storage.
+
 
 ## Assembling the dataset
 
@@ -70,13 +72,37 @@ Here are data on how many images ultimately were filtered out:
 
 ## Splitting the dataset
 
-(#TODO)
+I wanted flexibility in experimenting with different splits so I created a pipeline for labelling data by class and train/test/validation split; a full set of images labelled this way is added to the database as a dataset which contains the parameters used to assemble it and pointers to all the images that need to be read for that dataset.
+
+I ultimately used just a train/validation split of 80/20.
+
+I also wanted to experiment with the negative labels; I was not sure whether it would be best to create one negative class that encompasses all 3 data sources, or give each source it's own negative subclass. I created datasets for each case.
 
 ## Fitting the model
 
-(#TODO)
+After smoe experimentation, I landed on utilizing a MobileNetV3 - Large model and fine-tuning for my case. The main thought processes were:
+ - Taking advantage of transfer learning
+ - Using an architecture intended for usage on mobile CPU's
+
+I had limited computational resources to do extensive tuning of the model, but did some experimentation with:
+ - Learning rates (base & fine-tuning)
+ - Class weights (to account for unbalanced dataset)
+ - % of layers to unfreeze for fine-tuning
+ - Callbacks to decrease learning rate
+ - Labelling scheme (binary classificaiton vs. multiclass where each negative type gets it's own class)
+
+I ultimately found the binary vs. multiclass had similar results and opted for a multi-class scheme that had some class-weighting towards the positive and negative_similar_plants classes (the difficult cases).
+
+Here is the training progress with validation accuracy around ~95%:
+
 ![model training](./GH_images/training_progress.png)
+
+Looking at the confusion matrix, we could see the model struggled most distinguishing poison ivy from similar looking plants, as expected:
+
 ![confusion matrix multiclass](./GH_images/cm_multi_multi.png)
+
+And here are the same results with all the negative classes rolled into one:
+
 ![confusion matrix binary](./GH_images/cm_multi_binary.png)
 
 ## Implementing as an app
