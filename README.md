@@ -14,7 +14,7 @@
 
 The end goal for this project is an app that can distinguish whether or not the camera feed contains poison ivy. This project is built for educational purposes to explore and demonstrate modern data science techniques.
 
-To view similar projects, check out my Data Science portfolio page (#TODO).
+To view similar projects, [check out my Data Science portfolio page](https://kenwronka.github.io/data_science_portfolio/).
 
 As this is for educational purposes, I am keeping old and "pilot" versions of the code; [the most recent version of the model steps code can be found here](./code/model_pipeline_v1).
 
