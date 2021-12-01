@@ -84,6 +84,8 @@ After smoe experimentation, I landed on utilizing a MobileNetV3 - Large model an
  - Taking advantage of transfer learning
  - Using an architecture intended for usage on mobile CPU's
 
+This model was implemented in Tensorflow using the built in MobileNet model from Keras, just removing the classification head training on ImageNet.
+
 I had limited computational resources to do extensive tuning of the model, but did some experimentation with:
  - Learning rates (base & fine-tuning)
  - Class weights (to account for unbalanced dataset)
@@ -107,9 +109,15 @@ And here are the same results with all the negative classes rolled into one:
 
 ## Implementing as an app
 
-(#TODO)
+To implement in an app, I used TFLite to convret the model into a mobile-ready form. I tested the TFLite version interpreter in Python and verified accuracy was similar to the base Keras model.
+
+Since the project is educational and I am not an Android developer, I utilized the framework for the Android app from: (https://github.com/BCJuan/SimpleClassificationApp)
+
+With some alterations to the UI and importing my TFLite model, we can get the model running on an Android emulator!
 ![app image](./GH_images/app_screenshot.png)
 
 ## Limitations & Future Possibilities
 
-(#TODO)
+It's likely that going out and taking actual images of poison ivy in various seasons/lighting conditions would produce a better dataset.
+
+I also found that the app predictions are very volatile--it's likely some type of smoothing can be implemented over a window of predictions to give a more stable prediction.
